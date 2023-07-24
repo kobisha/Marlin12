@@ -52,6 +52,11 @@ namespace Marlin.sqlite.Data
         public DbSet<SLAByProducts> SLAByProducts { get; set; }
         public DbSet<SLAByShops> SLAByShops { get; set; }
         public DbSet<SLAByVendors> SLAByVendors { get; set; }
+        public DbSet<RetroBonusHeader> RetroBonusHeaders { get; set; }
+        public DbSet<RetroBonusDetails> RetroBonusDetails { get; set; }
+        public DbSet<RetroBonusPlanRanges> RetroBonusPlanRanges { get; set; }
+        public DbSet<RBFront> RBFronts { get; set; }
+        public DbSet<RetroBonusResult> RetroBonusResults { get; set; }
 
 
 
@@ -68,7 +73,8 @@ namespace Marlin.sqlite.Data
 
             base.OnModelCreating(modelBuilder);
         }
-
+      
+        
 
 
 

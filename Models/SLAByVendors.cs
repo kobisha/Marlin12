@@ -4,6 +4,7 @@
     {
         public int id { get; set; } 
         public string Vendor { get; set; }
+        public string OrderDate { get; set; }
         public decimal Orders { get; set; }
         public decimal Amount { get; set; }
         

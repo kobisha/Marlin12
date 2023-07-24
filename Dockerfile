@@ -1,5 +1,3 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
@@ -19,4 +17,9 @@ RUN dotnet publish "Marlin.sqlite.csproj" -c Release -o /app/publish /p:UseAppHo
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+# Create a new directory for the certificate files and copy them to the image
+#WORKDIR /app/certs
+#COPY ["certificate.pfx", "./"]
+
 ENTRYPOINT ["dotnet", "Marlin.sqlite.dll"]

@@ -27,16 +27,35 @@ namespace Marlin.sqlite.Controllers
         {
             try
             {
+                // Check if any users exist in the database
+                bool usersExist = _context.Users.Any();
+
+                // Set the initial value of userID based on existing users
+                if (usersExist)
+                {
+                    int maxUserID = _context.Users.Max(u => u.UserID);
+                    users.UserID = maxUserID + 1;
+                }
+                else
+                {
+                    users.UserID = 1001; // Set the first userID to 1001
+                }
+
                 _context.Users.Add(users);
                 _context.SaveChanges();
+
                 return Ok(users);
             }
             catch (Exception ex)
             {
                 //_logger.LogError(ex, "Error occurred while saving account to the database.");
-                return StatusCode(500, "An error occurred while saving the account.");
+                Console.WriteLine(ex.Message); // Log or print the exception message for debugging purposes
+                return StatusCode(500, ex.Message);
             }
         }
+
+
+
         [HttpGet]
 
         public async Task<IActionResult> GetUsers([FromQuery] PaginationFilter filter)

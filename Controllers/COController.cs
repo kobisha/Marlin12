@@ -19,6 +19,7 @@ namespace Marlin.sqlite.Controllers
         }
 
 
+
         [HttpGet]
         public IActionResult GetOrders(string accountID)
         {
@@ -41,7 +42,7 @@ namespace Marlin.sqlite.Controllers
                         SendStatus = o.SendStatus,
                         Products = _context.OrderDetails
                             .Where(d => d.OrderHeaderID == o.OrderID)
-                            .Select(p => new
+                            .Select(p => new OrderProductModel
                             {
                                 Id = p.Id,
                                 OrderHeaderID = p.OrderHeaderID,
@@ -50,10 +51,12 @@ namespace Marlin.sqlite.Controllers
                                 Quantity = p.Quantity,
                                 Price = p.Price,
                                 Amount = p.Amount,
-                                ReservedQuantity = p.ReservedQuantity
+                                ReservedQuantity = p.ReservedQuantity,
+                                Barcode = ""
                             }).ToList()
                     })
                     .ToList();
+
                 foreach (var order in orders)
                 {
                     var orderToUpdate = _context.OrderHeaders.FirstOrDefault(o => o.OrderID == order.OrderID);
@@ -62,14 +65,22 @@ namespace Marlin.sqlite.Controllers
                         orderToUpdate.SendStatus = 2;
                         orderToUpdate.StatusID = 2;
                     }
+
+                    foreach (var product in order.Products)
+                    {
+                        var barcode = _context.Barcodes.FirstOrDefault(b => b.ProductID == product.ProductID)?.Barcode;
+                        product.Barcode = barcode ?? ""; // Assign the barcode value to the temporary variable
+                    }
+
                     var orderStatusHistory = new OrderStatusHistory
                     {
                         OrderID = orderToUpdate.OrderID,
-                        Date = DateTime.Now,
-                        StatusID = orderToUpdate.StatusID,
+                        Date = DateTime.UtcNow,
+                        StatusID = orderToUpdate.StatusID
                     };
                     _context.OrderStatusHistory.Add(orderStatusHistory);
                 }
+
                 _context.SaveChanges();
 
                 return Ok(orders);
@@ -85,6 +96,9 @@ namespace Marlin.sqlite.Controllers
                 return BadRequest(new { error = errorMessage });
             }
         }
+
+
+
 
 
 

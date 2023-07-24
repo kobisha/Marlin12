@@ -54,7 +54,7 @@ namespace Marlin.sqlite.Controllers
                 {
 
                     AccountId = d.AccountID,
-                    ProductID = d.ProductID,
+                    ProductID = d.Barcode,
                     ShopID = d.ShopID,
                     Quantity = d.Quantity,
 

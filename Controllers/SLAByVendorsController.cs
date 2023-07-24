@@ -33,6 +33,7 @@ namespace Marlin.sqlite.Controllers
                     SELECT
                       MIN(""id"") as ""id"",
                     ""Vendor"" as ""Vendor"",
+                    ""OrderDate"" as ""OrderDate"",
 
                     count(""OrderNumber"") as ""Orders"",
 
@@ -46,7 +47,7 @@ namespace Marlin.sqlite.Controllers
 
                 FROM public.""ServiceLevels""
 
-                group by ""Vendor""
+                group by ""Vendor"",""OrderDate""
                 ";
 
         

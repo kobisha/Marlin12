@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Marlin.sqlite.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230606122843_stoksID")]
-    partial class stoksID
+    [Migration("20230626090725_ChangeColumnType")]
+    partial class ChangeColumnType
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -462,7 +462,7 @@ namespace Marlin.sqlite.Migrations
                     b.Property<decimal?>("Amount")
                         .HasColumnType("numeric");
 
-                    b.Property<DateTimeOffset>("Date")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Number")
@@ -477,6 +477,9 @@ namespace Marlin.sqlite.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("SendStatus")
+                        .HasColumnType("integer");
+
                     b.Property<string>("SenderID")
                         .IsRequired()
                         .HasColumnType("text");
@@ -485,7 +488,7 @@ namespace Marlin.sqlite.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal?>("StatusID")
+                    b.Property<decimal>("StatusID")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
@@ -520,14 +523,14 @@ namespace Marlin.sqlite.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTimeOffset>("Date")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("OrderID")
                         .HasColumnType("text");
 
-                    b.Property<string>("StatusID")
-                        .HasColumnType("text");
+                    b.Property<int>("StatusID")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -635,6 +638,226 @@ namespace Marlin.sqlite.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductsByCategories");
+                });
+
+            modelBuilder.Entity("Marlin.sqlite.Models.SLAByCategory", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+
+                    b.Property<decimal>("InTimeOrders")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("OrderedAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("OrderedQuantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Orders")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("ProductCategory")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("SLAByAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("SLAByQuantity")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("id");
+
+                    b.ToTable("sLAByCategories");
+                });
+
+            modelBuilder.Entity("Marlin.sqlite.Models.SLAByOrder", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+
+                    b.Property<decimal>("InTimeOrders")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("OrderDate")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("SLAByAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("SLAByQuantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Shop")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("id");
+
+                    b.ToTable("sLAByOrders");
+                });
+
+            modelBuilder.Entity("Marlin.sqlite.Models.SLAByProducts", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+
+                    b.Property<decimal>("InTimeOrders")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("OrderedAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("OrderedQuantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Orders")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Product")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("SLAByAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("SLAByQuantity")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("id");
+
+                    b.ToTable("SLAByProducts");
+                });
+
+            modelBuilder.Entity("Marlin.sqlite.Models.SLAByShops", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+
+                    b.Property<decimal>("DeliveredQuantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("InTimeOrders")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Orders")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("SLAByAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("SLAByQuantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Shop")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("id");
+
+                    b.ToTable("SLAByShops");
+                });
+
+            modelBuilder.Entity("Marlin.sqlite.Models.SLAByVendors", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("InTimeOrders")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Orders")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("SLAByAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("SLAByQuantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Vendor")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("id");
+
+                    b.ToTable("SLAByVendors");
+                });
+
+            modelBuilder.Entity("Marlin.sqlite.Models.ServiceLevels", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+
+                    b.Property<decimal?>("DeliveredAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("DeliveredQuantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("InTimeOrders")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("OrderDate")
+                        .HasColumnType("text");
+
+                    b.Property<string>("OrderNumber")
+                        .HasColumnType("text");
+
+                    b.Property<decimal?>("OrderedAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("OrderedQuantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Product")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProductCategory")
+                        .HasColumnType("text");
+
+                    b.Property<decimal?>("SLAByAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("SLAByQuantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Shop")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Vendor")
+                        .HasColumnType("text");
+
+                    b.HasKey("id");
+
+                    b.ToTable("ServiceLevels");
                 });
 
             modelBuilder.Entity("Marlin.sqlite.Models.Shops", b =>

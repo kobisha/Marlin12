@@ -1,38 +1,83 @@
 {
-  "header": [
+  [
     {
-      "OrderID": "6b3472f0-be72-11ed-bd6c-5048494f4e43",
-      "SourceID": "6b3472f0-be72-11ed-bd6c-5048494f4e43",
-      "Date": "2023-03-09 23:23:50",
-      "Number": "SS00-000001",
-      "SenderID": "850f2978-7e13-11e5-9ab6-642737d08518",
-      "ReceiverID": "a099b88e-9fce-11e5-80c0-000c295e18a3",
-      "ShopID": "b248dfe2-bb82-11e5-80cc-005056a600d9",
-      "Amount": "861.4",
-      "StatusID": "861.4"
+      "AccountID": "M00001",
+      "RetroBonusID": "19ac6fd7-7f9e-11e8-80ef-005056b569bf",
+      "DocumentNo": "000000002",
+      "SupplierID": "D00002",
+      "StartDate": "2018-07-01T00:00:00.000Z",
+      "EndDate": "",
+      "Status": "მოქმედებს",
+      "Condition": "შესყიდვის მიხედვით",
+      "IsMarketing": false,
+      "FundedByManufacturer": true,
+      "MinimalPercent": "",
+      "PlanAmount": "",
+      "PlanPercent":"",
+      "ManufacturerPercent": "1",
+      "Products": [
+        {
+          "RetroBonusID": "19ac6fd7-7f9e-11e8-80ef-005056b569bf",
+          "Barcode": "4637175504784",
+          "MinimalPercent": "10",
+          "PlanPercent": "",
+          "ManufacturerPercent": ""
+        },
+        {
+          "RetroBonusID": "19ac6fd7-7f9e-11e8-80ef-005056b569bf",
+          "Barcode": "4662574906568",
+          "MinimalPercent": "10",
+          "PlanPercent": "",
+          "ManufacturerPercent": ""
+        },
+        {
+          "RetroBonusID": "19ac6fd7-7f9e-11e8-80ef-005056b569bf",
+          "Barcode": "2200003000009",
+          "MinimalPercent": "10",
+          "PlanPercent": "",
+          "ManufacturerPercent": ""
+        },
+        {
+          "RetroBonusID": "19ac6fd7-7f9e-11e8-80ef-005056b569bf",
+          "Barcode": "4637175509074",
+          "MinimalPercent": "10",
+          "PlanPercent": "",
+          "ManufacturerPercent": ""
+        }
+      ],
+      "PlanRanges": [
+        {
+          "RetroBonusID": "19ac6fd7-7f9e-11e8-80ef-005056b569bf",
+          "RangeNo": "1",
+          "RangeName": "1-დან 1 - მდე",
+          "RangePercent": "1"
+        },
+        {
+          "RetroBonusID": "19ac6fd7-7f9e-11e8-80ef-005056b569bf",
+          "RangeNo": "2",
+          "RangeName": "2-დან 2 - მდე",
+          "RangePercent": "2"
+        },
+        {
+          "RetroBonusID": "19ac6fd7-7f9e-11e8-80ef-005056b569bf",
+          "RangeNo": "3",
+          "RangeName": "3-დან 3 - მდე",
+          "RangePercent": "3"
+        },
+        {
+          "RetroBonusID": "19ac6fd7-7f9e-11e8-80ef-005056b569bf",
+          "RangeNo": "4",
+          "RangeName": "4-დან 4 - მდე",
+          "RangePercent": "4"
+        },
+        {
+          "RetroBonusID": "19ac6fd7-7f9e-11e8-80ef-005056b569bf",
+          "RangeNo": "5",
+          "RangeName": "5 - ზე მეტი",
+          "RangePercent": "5"
+        }
+      ]
     }
-  ],
-  "Products": [
-    {
-      "OrderID": "6b3472f0-be72-11ed-bd6c-5048494f4e43",
-      "ProductID": "a723bb5a-9a76-11e5-80bc-000c295e18a3",
-      "Unit": "0",
-      "Quantity": "100",
-      "Price": "2.5",
-      "Amount": "250",
-      "ReservedQuantity": "34"
-    },
-    {
-      "OrderID": "6b3472f0-be72-11ed-bd6c-5048494f4e43",
-      "ProductID": "5a9145a6-9a83-11e5-80bc-000c295e18a3",
-      "Unit": "0",
-      "Quantity": "200",
-      "Price": "2.4",
-      "Amount": "480",
-      "ReservedQuantity": "34"
-    }
-
   ]
-        
     
 }

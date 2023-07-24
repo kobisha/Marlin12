@@ -280,7 +280,7 @@ namespace Marlin.sqlite.Migrations
                     b.Property<decimal?>("Amount")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("InvoiceID")
+                    b.Property<string>("InvoiceHeaderID")
                         .HasColumnType("text");
 
                     b.Property<decimal?>("Price")
@@ -351,7 +351,7 @@ namespace Marlin.sqlite.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
 
-                    b.Property<DateTimeOffset>("DueDate")
+                    b.Property<DateTime>("DueDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Number")
@@ -363,8 +363,8 @@ namespace Marlin.sqlite.Migrations
                     b.Property<string>("Package")
                         .HasColumnType("text");
 
-                    b.Property<string>("Period")
-                        .HasColumnType("text");
+                    b.Property<DateTime>("Period")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Status")
                         .HasColumnType("text");
@@ -680,6 +680,133 @@ namespace Marlin.sqlite.Migrations
                     b.ToTable("ProductsByCategories");
                 });
 
+            modelBuilder.Entity("Marlin.sqlite.Models.RetroBonusDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Barcode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal?>("ManufacturerPercent")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("MinimalPercent")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("PlanPercent")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("RetroBonusHeaderId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("RetroBonusID")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RetroBonusHeaderId");
+
+                    b.ToTable("RetroBonusDetails");
+                });
+
+            modelBuilder.Entity("Marlin.sqlite.Models.RetroBonusHeader", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AccountID")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Condition")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DocumentNo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("FundedByManufacturer")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsMarketing")
+                        .HasColumnType("boolean");
+
+                    b.Property<decimal?>("ManufacturerPercent")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("MinimalPercent")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("PlanAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("PlanPercent")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("RetroBonusID")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SupplierID")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RetroBonusHeaders");
+                });
+
+            modelBuilder.Entity("Marlin.sqlite.Models.RetroBonusPlanRanges", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("RangeName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RangeNo")
+                        .HasColumnType("text");
+
+                    b.Property<decimal?>("RangePercent")
+                        .HasColumnType("numeric");
+
+                    b.Property<int?>("RetroBonusHeaderId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("RetroBonusID")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RetroBonusHeaderId");
+
+                    b.ToTable("RetroBonusPlanRanges");
+                });
+
             modelBuilder.Entity("Marlin.sqlite.Models.SLAByCategory", b =>
                 {
                     b.Property<int>("id")
@@ -829,6 +956,10 @@ namespace Marlin.sqlite.Migrations
 
                     b.Property<decimal>("InTimeOrders")
                         .HasColumnType("numeric");
+
+                    b.Property<string>("OrderDate")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<decimal>("Orders")
                         .HasColumnType("numeric");
@@ -1044,8 +1175,8 @@ namespace Marlin.sqlite.Migrations
                     b.Property<string>("PositionInCompany")
                         .HasColumnType("text");
 
-                    b.Property<string>("UserID")
-                        .HasColumnType("text");
+                    b.Property<int>("UserID")
+                        .HasColumnType("integer");
 
                     b.HasKey("id");
 
@@ -1141,8 +1272,33 @@ namespace Marlin.sqlite.Migrations
                         .HasForeignKey("OrderHeadersId");
                 });
 
+            modelBuilder.Entity("Marlin.sqlite.Models.RetroBonusDetails", b =>
+                {
+                    b.HasOne("Marlin.sqlite.Models.RetroBonusHeader", "RetroBonusHeader")
+                        .WithMany("Products")
+                        .HasForeignKey("RetroBonusHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RetroBonusHeader");
+                });
+
+            modelBuilder.Entity("Marlin.sqlite.Models.RetroBonusPlanRanges", b =>
+                {
+                    b.HasOne("Marlin.sqlite.Models.RetroBonusHeader", null)
+                        .WithMany("PlanRanges")
+                        .HasForeignKey("RetroBonusHeaderId");
+                });
+
             modelBuilder.Entity("Marlin.sqlite.Models.OrderHeaders", b =>
                 {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Marlin.sqlite.Models.RetroBonusHeader", b =>
+                {
+                    b.Navigation("PlanRanges");
+
                     b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
